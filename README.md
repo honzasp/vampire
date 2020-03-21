@@ -27,3 +27,5 @@ argument `logger`.
 The library uses `asyncio` and `httpx` to scrape all sites in parallel. When
 used from async code, you may want to use `vampire.async_scrape_sites()`, which
 is async version of `vampire.scrape_sites()`.
+
+This software is released into public domain (see `UNLICENSE` for the legalese).
