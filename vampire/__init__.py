@@ -1,9 +1,9 @@
+from typing import List
 import asyncio
 import httpx
 import logging
 
 from .data import BLOOD_TYPES, BLOOD_STATUSES, SiteStatus
-
 from . import benesov
 from . import hodonin
 from . import karvina
@@ -36,7 +36,7 @@ SCRAPERS = [
     zlin,
 ]
 
-async def async_scrape_sites(*, logger=None):
+async def async_scrape_sites(*, logger=None) -> List[SiteStatus]:
     if logger is None:
         logger = logging.getLogger("vampire")
 
@@ -61,5 +61,5 @@ async def async_scrape_sites(*, logger=None):
         await asyncio.gather(*[scrape(client, s) for s in SCRAPERS])
     return sorted(site_statuses, key = lambda s: s.short_id)
 
-def scrape_sites(**kwargs):
+def scrape_sites(**kwargs) -> List[SiteStatus]:
     return asyncio.run(async_scrape_sites(**kwargs))

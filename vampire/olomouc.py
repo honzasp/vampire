@@ -2,7 +2,7 @@ import re
 from .helpers import get_html, inner_text, BLOOD_TEXT_TO_TYPE
 
 UUID = "62986dd03286fe38f7d6078fbf5f58f4"
-SHORT_ID = "ostrava"
+SHORT_ID = "olomouc"
 URL = "https://www.fnol.cz/kliniky-ustavy-oddeleni/transfuzni-oddeleni/pro-darce"
 NAME = "Fakultní nemocnice Olomouc"
 
