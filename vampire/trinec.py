@@ -1,8 +1,8 @@
 import re
-
 from .helpers import get_html, inner_text
-from .data import SiteStatus
 
+UUID = "9d614319a716dc55fb6033204c08928f"
+SHORT_ID = "trinec"
 URL = "https://www.nemtr.cz/index.php/cs/pacienti-a-navstevnici/" \
     "pro-darce-krve/125-nemocnice-trinec/pacienti-a-navstevnici/" \
     "925-stav-krevnich-zasob"
@@ -21,8 +21,8 @@ JS_VAR_TO_TYPE = {
 
 JS_VAR_RE = re.compile(r'var ([a-zA-Z]+) = "([0-9]+)"')
 
-async def scrape_trinec(sess):
-    doc = await get_html(sess, URL)
+async def scrape(client):
+    doc = await get_html(client, URL)
 
     blood_statuses = {}
     for script in doc.cssselect("script"):
@@ -40,8 +40,6 @@ async def scrape_trinec(sess):
                 blood_status = "normal"
             else:
                 blood_status = "urgent"
-
             blood_statuses[blood_type] = blood_status
-
-    return SiteStatus(url=URL, name=NAME, blood_statuses=blood_statuses)
+    return blood_statuses
 

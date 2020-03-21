@@ -19,6 +19,8 @@ BLOOD_STATUSES = [
 
 @dataclass
 class SiteStatus:
+    uuid: str
+    short_id: str
     url: str
     name: str
     blood_statuses: Dict[str, str]

@@ -1,7 +1,8 @@
 import re
 from .helpers import get_html, inner_text
-from .data import SiteStatus
 
+UUID = "032c6b3d8ea12887e600284bb1f0fd36"
+SHORT_ID = "trutnov"
 URL = "http://www.nemtru.cz/oddeleni-ambulance/darcovsky-usek"
 NAME = "Nemocnice Trutnov"
 
@@ -19,8 +20,8 @@ BLOOD_TEXT_TO_TYPE = {
 BLOOD_LEVEL_RE = re.compile(r'blood_(\d)\.png')
 BLOOD_LEVEL_TO_STATUS = ["urgent", "normal", "normal", "full"]
 
-async def scrape_trutnov(sess):
-    doc = await get_html(sess, URL)
+async def scrape(client):
+    doc = await get_html(client, URL)
 
     blood_statuses = {}
     for class_name in ["rh_faktor_plus", "rh_faktor_minus"]:
@@ -33,5 +34,4 @@ async def scrape_trutnov(sess):
             img_src = type_div.cssselect("img")[0].get("src")
             level = int(BLOOD_LEVEL_RE.search(img_src)[1])
             blood_statuses[blood_type] = BLOOD_LEVEL_TO_STATUS[level]
-
-    return SiteStatus(url=URL, name=NAME, blood_statuses=blood_statuses)
+    return blood_statuses
