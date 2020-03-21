@@ -6,12 +6,15 @@ This program scrapes the webs of Czech transfusion centers and hospitals
 and extracts information about the amount of available blood. Intended to
 provide data for the map at https://darujukrev.cz.
 
+**NOTE**: This program will break if the scraped web pages are modified in an
+unexpected way. Therefore, it must be continually maintained.
+
 This program can be run as a command line application:
 
     python3 -m vampire
 
 It will print the results in CSV (with a header) to stdout. Or it can be
-imported as a library:
+imported as a Python library:
 
     import vampire
     site_statuses = vampire.scrape_sites()
