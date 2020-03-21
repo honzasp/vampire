@@ -24,3 +24,10 @@ BLOOD_TEXT_TO_TYPE = {
     "Krevní plazma": "plasma",
 }
 
+def blood_percent_to_status(percent):
+    if percent >= 80:
+        return "full"
+    elif percent >= 30:
+        return "normal"
+    else:
+        return "urgent"

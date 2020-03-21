@@ -36,3 +36,11 @@ class SiteStatus:
     # Mapping from BLOOD_TYPES to BLOOD_STATUSES. Some blood types may not be present if
     # the status is not known.
     blood_statuses: Dict[str, str]
+
+def status_from_percent(percent):
+    if status >= 80:
+        return "full"
+    elif status >= 30:
+        return "normal"
+    else:
+        return "urgent"

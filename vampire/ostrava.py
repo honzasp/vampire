@@ -1,5 +1,5 @@
 import re
-from .helpers import get_html, inner_text
+from .helpers import get_html, inner_text, blood_percent_to_status
 
 UUID = "347a7cd913b1a57d45a37f4acc3a9582"
 SHORT_ID = "ostrava"
@@ -45,12 +45,5 @@ async def scrape(client):
 
             chart_div_id = table_tds[i+1][j+1].cssselect("div>div")[0].get("id")
             level = chart_values[chart_div_id]
-            # TODO: determine the thresholds
-            if level >= 95:
-                blood_status = "full"
-            elif level >= 25:
-                blood_status = "normal"
-            else:
-                blood_status = "urgent"
-            blood_statuses[blood_type] = blood_status
+            blood_statuses[blood_type] = blood_percent_to_status(level)
     return blood_statuses

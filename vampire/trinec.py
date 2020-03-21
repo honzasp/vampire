@@ -1,5 +1,5 @@
 import re
-from .helpers import get_html, inner_text
+from .helpers import get_html, inner_text, blood_percent_to_status
 
 UUID = "9d614319a716dc55fb6033204c08928f"
 SHORT_ID = "trinec"
@@ -32,14 +32,7 @@ async def scrape(client):
             blood_type = JS_VAR_TO_TYPE.get(js_var)
             if blood_type is None: continue
 
-            blood_level = int(js_var_match[1])
-            # TODO: determine this correctly
-            if blood_level >= 90:
-                blood_status = "full"
-            elif blood_level >= 25:
-                blood_status = "normal"
-            else:
-                blood_status = "urgent"
-            blood_statuses[blood_type] = blood_status
+            level = int(js_var_match[1])
+            blood_statuses[blood_type] = blood_percent_to_status(level)
     return blood_statuses
 

@@ -1,5 +1,5 @@
 import re
-from .helpers import get_html, inner_text
+from .helpers import get_html, inner_text, blood_percent_to_status
 
 UUID = "4d21d633b378885af5468746345fe510"
 SHORT_ID = "plzen"
@@ -28,11 +28,5 @@ async def scrape(client):
 
         level_text = inner_text(label_div)
         level = int(re.search(r'(\d+)%', level_text)[1])
-        if level >= 100:
-            blood_status = "full"
-        elif level >= 25:
-            blood_status = "normal"
-        else:
-            blood_status = "urgent"
-        blood_statuses[blood_type] = blood_status
+        blood_statuses[blood_type] = blood_percent_to_status(level)
     return blood_statuses
