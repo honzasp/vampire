@@ -1,5 +1,6 @@
 from typing import List
 import asyncio
+import datetime
 import httpx
 import logging
 
@@ -53,8 +54,12 @@ async def async_scrape_sites(*, logger=None) -> List[SiteStatus]:
             assert blood_type in BLOOD_TYPES, (blood_type,)
             assert blood_status in BLOOD_STATUSES, (blood_status,)
 
-        site_statuses.append(SiteStatus(uuid=scraper.UUID, short_id=scraper.SHORT_ID,
-            url=scraper.URL, name=scraper.NAME, blood_statuses=blood_statuses))
+        timestamp = datetime.datetime.utcnow().isoformat(timespec="seconds")
+        site_statuses.append(SiteStatus(
+            uuid=scraper.UUID, short_id=scraper.SHORT_ID,
+            url=scraper.URL, name=scraper.NAME,
+            blood_statuses=blood_statuses, timestamp=timestamp,
+        ))
 
     headers = {"User-Agent": "Vampire"}
     async with httpx.AsyncClient(headers=headers, verify=False) as client:
