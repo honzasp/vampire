@@ -18,8 +18,9 @@ async def scrape(client):
             blood_status = "urgent"
         elif "odlozte" in ico_src:
             blood_status = "full"
+        elif "muzete_prijit" in ico_src:
+            blood_status = "normal"
         else:
-            # TODO: what does the "normal" state look like?
             assert False, (ico_src,)
         blood_statuses[blood_type] = blood_status
 
